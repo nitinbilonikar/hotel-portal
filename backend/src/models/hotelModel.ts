@@ -19,13 +19,21 @@ export const getAllHotels = async (): Promise<Hotel[]> => {
 };
 
 export const findHotelById = async (id: number): Promise<Hotel | null> => {
+    const query = 'SELECT * FROM hotels WHERE id = $1';
+    const values = [id];
+    
     const client = await pool.connect();
-    const res = await client.query('SELECT * FROM hotels WHERE id = ?', [id]);
-    const hotels = res.rows as Hotel[];
+    const  result = await client.query(query, values);
+    const hotels = result.rows as Hotel[];
     client.release();
     return hotels.length ? hotels[0] : null;
 };
 
 export const updateHotelAvailability = async (id: number, availability: boolean): Promise<void> => {
-  await pool.query('UPDATE hotels SET availability = ? WHERE id = ?', [availability, id]);
+  const query = 'UPDATE hotels SET availability = $1 WHERE id = $2';
+  const values = [availability, id];
+  
+  const client = await pool.connect();
+  await client.query(query, values);
+  client.release();
 };
