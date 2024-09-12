@@ -1,11 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import hotelRoutes from './routes/hotelRoutes';
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
 // Middleware
 app.use(express.json());
 

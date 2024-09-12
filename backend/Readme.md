@@ -17,6 +17,8 @@ npm i --save-dev ts-node
 npm install --save-dev mysql2 dotenv 
 npm install pg
 npm i --save-dev @types/pg
+npm i --save-dev cors
+npm i --save-dev @types/cors
 
 #run the test using folowing command
 npx jest
