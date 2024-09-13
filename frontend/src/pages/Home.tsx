@@ -1,37 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid } from '@chakra-ui/react';
-import HotelCard from '../components/HotelCard';
-import { getHotels, bookHotel } from '../services/api';
+// src/pages/Booking.tsx
+import React from 'react';
+import { Container, Text } from '@chakra-ui/react';
 
-const Home = () => {
-  const [hotels, setHotels] = useState([]);
-
-  useEffect(() => {
-    const fetchHotels = async () => {
-      const { data } = await getHotels();
-      setHotels(data);
-    };
-    fetchHotels();
-  }, []);
-
-  const handleBook = async (id: number) => {
-    try {
-      await bookHotel(id);
-      alert('Hotel booked successfully!');
-    } catch (error) {
-      alert('Failed to book the hotel.');
-    }
-  };
-
+const Booking: React.FC = () => {
   return (
-    <Box p="5">
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        {hotels.map((hotel) => (
-          <HotelCard key={hotel} hotel={hotel} onBook={handleBook} />
-        ))}
-      </Grid>
-    </Box>
+    <Container maxW="md">
+    <Text fontSize="2xl">Welcome to the Booking portal</Text>
+    {/* Your booking form or logic goes here */}
+  </Container>
   );
 };
-
-export default Home;

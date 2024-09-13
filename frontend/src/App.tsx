@@ -1,23 +1,35 @@
+// src/App.tsx
 import React from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import Home from './pages/Home';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import NonLoggedInNav from './components/NonLoggedInNav.tsx';
+import LoggedInNav from './components/LoggedInNav';
 import Login from './pages/Login';
-import Register from './pages/Register';
-import Navbar from './components/Navbar';  // Add a simple Navbar component
+import Booking from './pages/Booking';
 
-const App = () => {
+// Create a wrapper component to conditionally render the correct navigation
+const NavigationBar: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
+  return isAuthenticated ? <LoggedInNav /> : <NonLoggedInNav />;
+};
+
+const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <ChakraProvider>
+      <AuthProvider>
+        <Router>
+          {/* Conditionally render the correct navigation bar */}
+          <NavigationBar />
+          <Routes>
+            <Route path="/" element={<div>Welcome to the hotel booking portal</div>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/booking" element={<Booking />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ChakraProvider>
   );
 };
 
